@@ -1,0 +1,69 @@
+
+.main-background {
+  background-image: url('assets/wallpaper.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 40px;
+  color: white;
+  text-align: center;
+  font-family: sans-serif;
+  position: relative;
+}
+.main-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  z-index: -1;
+}
+.slideshow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 50px;
+}
+.slideshow img {
+  width: 400px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+}
+
+.slideshow img:hover {
+  transform: scale(1.05);
+}
+
+/* Button */
+#nextBtn {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#nextBtn:hover {
+  background-color: #555;
+}
+#galleryImage {
+  width: 600px;    
+  max-width: 90%;   
+  height: auto;    
+  
+  border: 5px solid white; 
+  border-radius: 4px;     
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+}
+
+
+

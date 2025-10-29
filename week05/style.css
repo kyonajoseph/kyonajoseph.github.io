@@ -1,0 +1,71 @@
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Bitcount Grid Single', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  overflow: hidden;
+  position: relative;
+}
+.glitch-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    #fff 0px,
+    #fff 1px,
+    #000 2px,
+    #000 3px
+  );
+  opacity: 0.15;
+  animation: glitch 0.2s steps(5) infinite;
+  z-index: 0;
+}
+
+@keyframes glitch {
+  0% { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  grid-template-rows: repeat(2, 200px);
+  gap: 20px;
+  z-index: 1;
+  position: relative;
+}
+.response-box {
+  background: rgba(0,0,0,0.4);
+  border: 2px solid white;
+  border-radius: 30px;
+  text-align: center;
+  padding: 20px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  font-size: 1rem;
+}
+.response-text {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  transform: translate(-50%, -50%);
+}
+.response-box:hover {
+  background: rgba(0,0,0,0.0);
+  transform: scale(1.05);
+}
+.response-box:hover .response-text {
+  opacity: 1;
+}
