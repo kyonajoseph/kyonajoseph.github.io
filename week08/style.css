@@ -19,6 +19,7 @@ main {
  position: absolute;
  top: 15px;
  left: 20px;
+ z-index: 10;
 }
 
 
@@ -42,6 +43,10 @@ main {
 }
 /*HOME PAGE*/
 /* LEFT CONTENT */
+.left {
+ width: 45%;
+}
+
 .left .text-block {
  display: flex;
  flex-direction: column;
@@ -104,12 +109,6 @@ main {
 .preview-img:hover {
  transform: scale(1.03);
 }
-
-
-
-
-
-
 
 
 /* FONTS CLASSES */
@@ -212,7 +211,7 @@ main {
 }
 
 
-/* OUR EXPERIENCES SLIDE */
+/* OUR EXPERIENCES SLIDE & ARTIST PAGE */
 h1, h2 {
  text-align: center;
  margin: 20px 0 10px 0;
@@ -228,12 +227,12 @@ h2 {
 }
 
 
-/* Container holding both reflections */
+/* Container holding both reflections (Experiences & Artist pages) */
 .reflection-container {
  display: flex;
  width: 90%;
  max-width: 1200px;
- margin: 0 auto 40px auto;
+ margin: 0 auto; /* Centered */
  gap: 20px;
  height: 70vh;
 }
@@ -283,4 +282,139 @@ h2 {
  margin-top: 15px;
  display: block;
  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* =================================
+   ARTIST PAGE (GALLERY)
+   ================================= */
+
+/* This styles the "Selected Works" title */
+.section-title {
+  text-align: center;
+  font-family: 'Anton', sans-serif;
+  font-size: 2.5rem;
+  color: white;
+  margin-top: 0; /* Changed from 40px */
+}
+
+/* This is the grid for the hover images */
+.artwork-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 10px;
+}
+
+.artwork-item {
+  position: relative; 
+  overflow: hidden; 
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  aspect-ratio: 1 / 1; 
+}
+
+.artwork-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  transition: transform 0.4s ease;
+}
+
+.artwork-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(106, 9, 173, 0.9); 
+  color: white;
+  padding: 20px;
+  box-sizing: border-box; 
+  overflow-y: auto;
+  opacity: 0; 
+  transition: opacity 0.4s ease;
+}
+
+.artwork-overlay h4 {
+  margin-top: 0;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  border-bottom: 1px solid white;
+  padding-bottom: 5px;
+}
+
+.artwork-item:hover .artwork-overlay { opacity: 1; }
+.artwork-item:hover img { transform: scale(1.1); }
+
+/* This styles the right column on the Artist page */
+#gallery-column {
+  background: none; 
+  box-shadow: none;
+  border-left: none;
+}
+
+#gallery-column .section-title {
+  color: white; 
+  margin-bottom: 20px;
+}
+
+/* Fixes UL list style in bio */
+.reflection ul {
+  list-style-position: inside;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* =================================
+   CONCLUSION PAGE
+   ================================= */
+
+/* This targets the main container *only* on the conclusion page */
+#conclusion-container {
+  height: auto;            /* Removes the fixed 70vh height */
+  align-items: center;     /* Vertically centers all 3 items */
+  justify-content: center; /* Centers all 3 items horizontally */
+  gap: 20px;               
+}
+
+/* This targets the center box *only* on the conclusion page */
+#conclusion-container #conclusion-box {
+  flex: 0 0 500px; /* Don't grow, don't shrink, base width 500px */
+  height: auto;      /* Let content define height */
+  min-height: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* This styles the side images *only* on the conclusion page */
+#conclusion-container .side-image {
+  flex: 1 1 25%;     /* Grow, shrink, base width 25% */
+  max-width: 300px; 
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Styles for the button on the conclusion page */
+.doc-button {
+  display: inline-block;
+  background-color: #ff5a4b;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.doc-button:hover {
+  background-color: #fff; 
+  color: #ff5a4b; 
+  transform: scale(1.05);
 }
