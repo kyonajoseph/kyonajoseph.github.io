@@ -1,0 +1,286 @@
+/* BODY & MAIN */
+body {
+ background-color: #8B1AC4;
+}
+
+
+main {
+ position: relative;
+ display: flex;           
+ justify-content: space-between;
+ align-items: center;
+ padding: 2rem;
+ height: 100vh;         
+}
+
+
+/* NAV BUTTONS */
+.button {
+ position: absolute;
+ top: 15px;
+ left: 20px;
+}
+
+
+.button button {
+ background: none;
+ border: none;
+ font-family: "Bebas Neue", sans-serif;
+ font-size: 15px;
+ letter-spacing: 1px;
+ cursor: pointer;
+ padding: 6px 16px;
+ border-radius: 20px;
+ font-weight: 600;
+ color: rgb(255, 255, 255);
+ transition: opacity 0.2s ease;
+}
+
+
+.button button:hover {
+ opacity: 0.6;
+}
+/*HOME PAGE*/
+/* LEFT CONTENT */
+.left .text-block {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ gap: 10px;             
+}
+
+
+.left .text-block h1 {
+ font-family: 'Anton', sans-serif;
+ font-size: 90px;     
+ line-height: 1;     
+ margin: 0;         
+ letter-spacing: 2px;
+}
+
+
+.left .text-block .subtext {
+ font-family: 'Bebas Neue', sans-serif;
+ font-size: 22px;
+ line-height: 1.2;
+ margin: 0;   
+ color: white      
+}
+
+
+/*RIGHT CONTENT*/
+.right {
+ width: 50%;
+ display: flex;
+ flex-direction: column; /* stack image and caption vertically */
+ justify-content: center;
+ align-items: center;    /* centers the content horizontally */
+ gap: 10px;              /* space between image and caption */
+}
+
+
+.image-caption {
+ font-family:sans-serif;
+ font-size: 16px;     
+ color: #ffffff;
+ text-align:left;   
+ margin: 0;
+ max-width: 500px;  
+}
+
+
+.preview-img {
+ width: 100%;
+ max-width: 500px;
+ border-radius: 8px;
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+ cursor: pointer;
+ transition: transform 0.2s ease;
+
+
+}
+
+
+.preview-img:hover {
+ transform: scale(1.03);
+}
+
+
+
+
+
+
+
+
+/* FONTS CLASSES */
+.anton-regular {
+ font-family: "Anton", sans-serif;
+ font-weight: 600;
+ font-style: normal;
+}
+
+
+.bebas-neue-regular {
+ font-family: "Bebas Neue", sans-serif;
+ font-weight: 400;
+ font-style: normal;
+}
+
+
+/* NEXT ARROW */
+.next-arrow {
+ position: fixed;
+ bottom: 30px;
+ right: 30px;
+ text-align: center;
+ z-index: 1000;
+}
+
+
+.next-arrow a {
+ text-decoration: none;
+ color: rgb(249, 249, 249);
+ font-family: 'Bebas Neue', sans-serif;
+ display: inline-flex;
+ flex-direction: column;
+ align-items: center;
+}
+
+
+.next-arrow .arrow {
+ font-size: 40px;
+ line-height: 1;
+ transition: transform 0.3s ease;
+}
+
+
+.next-arrow:hover .arrow {
+ transform: translateX(5px);
+}
+
+
+.next-arrow p {
+ margin-top: 4px;
+ font-size: 18px;
+ letter-spacing: 1px;
+}
+
+
+/* ARTWORK PAGE */
+.inspiration-container {
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+ margin-top: 20px;
+ gap: 20px;
+}
+
+
+.inspiration-container .left {
+ width: 45%;
+}
+
+
+.inspiration-container .right {
+ width: 50%;
+}
+
+
+.inspiration-container .right img {
+ width: 100%;
+ height: auto;
+ cursor: pointer;
+ object-fit: cover;
+ transition: transform 0.3s;
+}
+
+
+.inspiration-container .right img:hover {
+ transform: scale(1.03);
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+ .inspiration-container {
+   flex-direction: column;
+ }
+ .inspiration-container .left,
+ .inspiration-container .right {
+   width: 100%;
+ }
+}
+
+
+/* OUR EXPERIENCES SLIDE */
+h1, h2 {
+ text-align: center;
+ margin: 20px 0 10px 0;
+ color: #ff5a4b;
+ font-family: 'Anton', sans-serif;
+}
+
+
+h2 {
+ font-size: 24px;
+ color: #fff;
+ font-family: 'Bebas Neue', sans-serif;
+}
+
+
+/* Container holding both reflections */
+.reflection-container {
+ display: flex;
+ width: 90%;
+ max-width: 1200px;
+ margin: 0 auto 40px auto;
+ gap: 20px;
+ height: 70vh;
+}
+
+
+/* Each reflection box */
+.reflection {
+ flex: 1;
+ padding: 20px;
+ overflow-y: auto;
+ background-color: #9a4bd6;
+ color: #fff;
+ font-family: 'Bebas Neue', sans-serif;
+ font-size: 18px;
+ line-height: 1.6;
+ border-radius: 8px;
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Divider between columns */
+.reflection + .reflection {
+ border-left: 2px solid #8B1AC4;
+}
+
+
+/* Titles inside reflections */
+.reflection h3 {
+ font-family: 'Anton', sans-serif;
+ font-size: 36px;
+ color: #ff5a4b;
+ text-align: center;
+ margin-bottom: 15px;
+}
+
+
+/* Paragraph spacing */
+.reflection p {
+ margin-bottom: 15px;
+}
+
+
+/* Images at the bottom */
+.reflection img {
+ width: 100%;
+ border-radius: 8px;
+ margin-top: 15px;
+ display: block;
+ box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
