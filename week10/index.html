@@ -4,53 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>4chan - Google Search</title>
-    <!-- Load Tailwind CSS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #ffffff;
-            /* Simulate Google's default line-height */
+         
             line-height: 1.57;
         }
-        /* Style for the blue search result title */
+       
         .search-title {
-            color: #1a0dab; /* Google's blue */
-            font-size: 1.25rem; /* Equivalent to Google's H3 size */
+            color: #1a0dab; 
+            font-size: 1.25rem; 
             font-weight: 400;
             text-decoration: none;
         }
         .search-title:hover {
             text-decoration: underline;
         }
-        /* Style for the green URL */
+ 
         .search-url {
-            color: #006621; /* Google's green */
+            color: #006621; 
             font-size: 0.875rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Header and Search Bar Simulation -->
+    
     <header class="border-b border-gray-200 sticky top-0 bg-white">
         <div class="max-w-3xl mx-auto flex items-center p-4">
-            <!-- Simplified Google Logo (G) -->
+           
             <div class="text-2xl font-bold mr-6" style="color:#4285F4;">
                 G
             </div>
             
-            <!-- Simulated Search Input -->
+           
             <div class="flex-grow">
                 <input type="text" value="4chan" readonly 
                        class="w-full border border-gray-300 bg-gray-100 rounded-full py-2 px-4 text-gray-700 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
             </div>
 
-            <!-- Profile Placeholder -->
+           
             <div class="ml-4 w-8 h-8 bg-gray-200 rounded-full"></div>
         </div>
         
-        <!-- Navigation Tabs Simulation -->
+        
         <div class="max-w-3xl mx-auto flex text-sm text-gray-700 ml-20 -mt-2 pb-2">
             <a href="#" class="pb-2 mr-6 text-blue-600 border-b-2 border-blue-600 font-medium">All</a>
             <a href="#" class="pb-2 mr-6 hover:text-blue-600">Images</a>
@@ -59,16 +59,16 @@
         </div>
     </header>
 
-    <!-- Main Search Results Area -->
+    
     <main class="max-w-3xl mx-auto pt-6 px-4">
         
         <p class="text-sm text-gray-600 mb-6">
             About 12,000,000 results (0.43 seconds) 
         </p>
 
-        <!-- === THE RICK ROLL RESULT (Primary Link) === -->
+       
         <div class="mb-8 max-w-xl">
-            <!-- This is the link that triggers the Rick Roll -->
+           
             <a href="#" id="rickRollLink" class="search-title block" onclick="handlePrankClick(event)">
                 4chan
             </a>
@@ -82,7 +82,7 @@
             </p>
         </div>
         
-        <!-- === OTHER FAKE RESULTS === -->
+        
         <div class="mb-8 max-w-xl">
             <a href="#" class="search-title block">
                 4chan - Wikipedia
@@ -110,15 +110,15 @@
     </main>
 
     <script>
-        // Use a function to ensure the click event is handled reliably
+        
         function handlePrankClick(event) {
-            // Prevent the default action (which would be navigating to the '#' hash)
+            
             event.preventDefault(); 
             
-            // The classic Rick Astley video URL
+            
             const rickRollUrl = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
             
-            // Use window.location.replace() to redirect the user
+        
             window.location.replace(rickRollUrl);
         }
     </script>
