@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Project: Book Review Site</title>
+    
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        
+        body {
+            font-family: 'Courier New', Courier, monospace; 
+            background-color: #9e7931; 
+            color: #000000; 
+        }
+
+        h1, h2, h3 {
+            font-family: 'Comic Sans MS', 'Arial Black', sans-serif; 
+            text-transform: uppercase;
+        }
+
+        .card {
+            border: 4px solid black;
+            background-color: #ffffff;
+            
+            min-height: 450px;
+        }
+
+        .img-container {
+            height: 250px;
+            border-bottom: 4px solid black;
+        }
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        [contenteditable="true"] {
+            outline: none;
+            border: 2px dashed #555555;
+            padding: 15px;
+            background-color: #ffffcc; 
+            margin-top: 15px;
+            min-height: 100px; 
+        }
+        [contenteditable="true"]:focus {
+            border: 2px solid black;
+            background-color: #ffffff;
+        }
+
+        .btn-blocky {
+            border: 3px solid black;
+            background-color: #d1d5db; 
+            color: black;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .btn-blocky:hover {
+            background-color: #9ca3af; 
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen p-4">
+
+    <!-- HEADER -->
+    <header class="bg-yellow-200 border-4 border-black p-8 mb-8 text-center">
+        <h1 class="text-4xl font-bold mb-4">Final Project Proposal</h1>
+        <p class="text-lg">
+            My Plan: A Digital Book Review Library
+            <br>
+            
+        </p>
+    </header>
+
+    
+    <main class="flex-grow">
+        
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- Concept -->
+            <div class="card flex flex-col">
+                <div class="img-container">
+                    <img src="Images/books.png" alt="The Goal">
+                </div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">1. THE CONCEPT</h3>
+                    <p class="font-bold text-gray-600 mb-2">A Tracking Book Site</p>
+                    <div class="flex-grow">
+                        <div contenteditable="true">
+                            I want to build a "Digital Bookshelf." My goal is to create a responsive website that displays my book progress. I will include cover images, star ratings, and a short summary for each book also tracking progress and opinions after certain chapters of the book.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wireframe -->
+            <div class="card flex flex-col">
+                <div class="img-container">
+                    <img src="Images/zlibrary.png" alt="The Plan">
+                </div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">2. Wireframe</h3>
+                    <p class="font-bold text-gray-600 mb-2">Inspiration: Zlibrary</p>
+                    <div class="flex-grow">
+                        <div contenteditable="true">
+                            I want it to be an improved Zlibrary site. But for book reviews, I like the simplicity of it. I also want there to be options to share your reviews if you want.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inspiration -->
+            <div class="card flex flex-col">
+                <div class="img-container">
+                    <img src="Images/MAL.png" alt="Final Result">
+                </div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h3 class="text-2xl font-bold mb-2">Inspiration</h3>
+                    <p class="font-bold text-gray-600 mb-2">My Anime List</p>
+                    <div class="flex-grow">
+                        <div contenteditable="true">
+                            Inspired by My Anime List, in tracking series. But this series is mainly dedicated to Anime and Mangs I would like to create a more neat book reading site for diverse selections.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-300 border-4 border-black p-8 mt-8 text-center">
+        <p class="mb-4 font-bold">Proposal for Book Project.</p>
+        <a href="index.html" class="btn-blocky inline-block mt-4" style="text-decoration: none;">
+    GO BACK TO REFLECTION <i class="fas fa-arrow-left ml-2"></i>
+</a>
+    </footer>
+
+
+</body>
+</html>
