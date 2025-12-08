@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Bookshelf</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="logo">Library</div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterBooks()">
+        </div>
+    </header>
+
+    <main id="app">
+        
+        <div id="shelf-view" class="grid-container">
+            </div>
+
+        <div id="detail-view" class="hidden">
+            <div class="nav-bar">
+                <button onclick="goBack()" class="btn-text">← Back</button>
+            </div>
+            
+            <div class="centered-layout">
+                <h1 id="detail-title">Book Title</h1>
+                <h3 id="detail-author">Author Name</h3>
+                
+                <div id="detail-cover" class="cover-large"></div>
+                
+                <div class="progress-section">
+                    <div class="progress-bar-bg">
+                        <div id="detail-progress-bar" class="progress-bar-fill"></div>
+                    </div>
+                    <p id="detail-percentage">0% Complete</p>
+                </div>
+
+                <div class="log-input-box">
+                    <div class="row">
+                        <input type="number" id="chapInput" placeholder="Chap #">
+                        <select id="ratingInput">
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★☆</option>
+                            <option value="3">★★★☆☆</option>
+                            <option value="2">★★☆☆☆</option>
+                            <option value="1">★☆☆☆☆</option>
+                        </select>
+                    </div>
+                    <textarea id="noteInput" placeholder="Write your thoughts..."></textarea>
+                    <button onclick="saveLog()" class="btn-primary">Log Entry</button>
+                </div>
+
+                <div id="logs-list">
+                    </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
