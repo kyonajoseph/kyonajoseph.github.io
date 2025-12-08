@@ -11,7 +11,7 @@ const defaultBooks = [
         id: 2,
         title: "Letters to Milena",
         author: "Franz Kafka",
-        totalPages: 320,
+        totalChapters: 320,
         cover: "https://m.media-amazon.com/images/I/61fSle1komL._AC_UY436_FMwebp_QL65_.jpg"
     },
     {
