@@ -23,22 +23,21 @@ const defaultBooks = [
     }
 ];
 
-// --- THE FIX IS HERE ---
-// We force the browser to use defaultBooks, ignoring any saved empty lists.
+
 let library = defaultBooks; 
 let currentBook = null;
 
-// INIT
+
 function init() {
-    // Force save the fresh data immediately
+    
     localStorage.setItem('myLibrary', JSON.stringify(library));
     renderShelf(library);
 }
 
-// RENDER SHELF
+
 function renderShelf(booksToRender) {
     const container = document.getElementById('shelf-view');
-    if (!container) return; // Safety check
+    if (!container) return; 
     container.innerHTML = ''; 
 
     booksToRender.forEach(book => {
@@ -57,7 +56,7 @@ function renderShelf(booksToRender) {
     });
 }
 
-// OPEN BOOK
+
 function openBook(id) {
     currentBook = library.find(b => b.id === id);
     if (!currentBook.logs) currentBook.logs = [];
@@ -97,7 +96,7 @@ function saveLog() {
         date: new Date().toLocaleDateString()
     });
 
-    // Update progress stats
+
     currentBook.readChapters = Math.max(currentBook.readChapters || 0, chap);
 
     localStorage.setItem('myLibrary', JSON.stringify(library));
