@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SungSimDang Redesign - Kyona Joseph</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* This makes the text "float" over the image */
+        .banner-overlay {
+            position: absolute;
+            /* CHANGED: Moved from 'bottom' to 'top' to clear the artwork */
+            top: 40px;   
+            left: 5%;
+            background-color: rgba(255, 255, 255, 0.95); /* White background with slight transparency */
+            padding: 25px 35px;
+            border-left: 5px solid #F2C94C; /* The Yellow Accent Bar */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Soft shadow for "hovering" effect */
+            max-width: 400px;
+            z-index: 10;
+        }
+
+        .banner-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin: 0;
+            color: #111;
+            line-height: 1.1;
+        }
+
+        .banner-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            margin-top: 8px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+        
+        /* Mobile adjust */
+        @media (max-width: 600px) {
+            .banner-overlay {
+                position: relative;
+                top: auto; /* Reset top */
+                left: auto;
+                width: 90%;
+                margin: 20px auto; /* Add space around it on mobile */
+            }
+        }
+    </style>
+</head>
+<body class="sungsimdang-theme">
+
+    <nav class="top-nav">
+        <a href="index.html" class="logo">Kyona Joseph</a> 
+        <div class="nav-links">
+            <a href="index.html">Work</a> / <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <main>
+        
+        <header class="hero-header" style="height: auto; min-height: auto; padding-top: 80px; position: relative;">
+            <img 
+                src="assets/sungsimdang/soboro.png" 
+                alt="SungSimDang Redesign Hero"
+                class="hero-bg no-dim"
+                style="position: relative; width: 100%; height: auto; object-fit: contain; max-height: 90vh;">
+            
+            <div class="banner-overlay">
+                <h1 class="banner-title">Fried Soboro (2025) Packaging Redesign<br>
+                <p class="banner-subtitle">KAIST University X SungSimDang Collaboration</p>
+            </div>
+        </header>
+<section class="project-specs">
+            <div class="specs-left">
+                <div class="spec-item">
+                    <h4>— PROJECT</h4>
+                    <p>SungSimDang Bakery<br>Packaging Redesign</p>
+                </div>
+                <div class="spec-item">
+                    <h4>— ROLE</h4>
+                    <p>Product Designer<br>User Research<br>Prototyping</p>
+                </div>
+                <div class="spec-item">
+                    <h4>— LOCATION</h4>
+                    <p>KAIST University (Daejeon, South Korea)</p>
+                </div>
+
+                <div class="spec-item" style="margin-top: 40px;">
+                    <h4 style="font-size: 0.8rem; margin-bottom: 5px;">— ORIGINAL</h4>
+                    <img 
+                        src="assets/sungsimdang/original_design.png" 
+                        alt="Original Packaging" 
+                        style="width: 280px; height: auto; border: 2px solid #F2C94C; display: block;">
+                    <p style="font-size: 0.7rem; color: #999; margin-top: 5px;">(Before Redesign)</p>
+                </div>
+            </div>
+
+            <div class="specs-right">
+                <p>
+                    During my semester studying abroad at KAIST in South Korea, I had the opportunity to collaborate in a group project 
+                    with <strong>SungSimDang</strong>, Daejeon's most famous bakery. Their signature "Fried Soboro" 
+                    is incredibly popular, selling over <strong>40,000 units a day</strong> and frequently selling out 
+                    before closing. Many people travel across provinces to purchase this pastry.
+                </p>
+                <p style="margin-top: 15px;">
+                    With such high volume, our group focused on package design to address a critical recycling mistake. 
+                    Through user testing, we discovered that customers were incorrectly sorting the packaging into paper recycling. 
+                    However, because the product is oily, the wrapper actually belongs in general waste.
+                </p>
+                <p style="margin-top: 15px;">
+                    Our initiative redesigned the packaging to intuitively guide users toward proper disposal without taking 
+                    away the fun of the brand's natural aesthetic. Our project was <strong>approved</strong> 
+                    out of all 5 cohorts, and begun <strong>mass printing</strong> with the updated design.
+                </p>
+                
+                <div class="specs-list-title" style="margin-top: 30px;">GROUP MEMBERS</div>
+                <ul>
+                    <li>Minseo Lim</li>
+                    <li>Minsu Kim</li>
+                    <li>Sihyun Park</li>
+                    <li>Hyerin Na</li>
+                    <li>Kyona Joseph</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="grid-gallery-section">
+            <h3>Phase 1: Research & Process</h3>
+            <p style="color: #4A3B32; margin-bottom: 20px;">
+                Below is the full process deck of our initial research, problem identification, and ideation phases.
+            </p>
+            
+            <div class="pdf-container">
+                <embed src="assets/sungsimdang/process_deck.pdf" type="application/pdf" width="100%" height="100%" />
+            </div>
+        </section>
+
+        <section class="zig-zag-row">
+            <div class="text-side">
+                <h3>Physical Re-enactment</h3>
+                <p>
+                    We acted out the user's journey physically to identify pain points 
+                    that aren't obvious on paper, specifically of how the user interacts 
+                    with the product from first sight to after purchasing.
+                </p>
+            </div>
+            <div class="image-side">
+                <img src="assets/sungsimdang/drawn_user_journey.png" alt="Drawn User Journey">
+            </div>
+        </section>
+
+        <section class="grid-gallery-section">
+            <h3>User Journey Map</h3>
+            
+            <p style="color: #333; font-size: 1rem; margin-bottom: 10px; line-height: 1.5;">
+                In this User Journey Map, it depicts the full journey of the user to determine 
+                how the consumer will dispose of the product, from the consumers perspective and the employee's.
+            </p>
+
+            <p style="color: #888; font-size: 0.9rem; font-style: italic; margin-bottom: 20px;">
+                Scroll right to view the details →
+            </p>
+
+            <div class="horizontal-scroll-wrapper">
+                <img 
+                    src="assets/sungsimdang/user_journey_testing.jpg" 
+                    alt="Formal User Journey Map"
+                    style="height: 130vh; min-height: 1100px; width: auto; max-width: none;">
+            </div>
+        </section>
+
+        <section class="grid-gallery-section">
+            <h3>Phase 2: Design Evolution</h3>
+            
+            <p style="color: #333; font-size: 1rem; margin-bottom: 10px; line-height: 1.5;">
+                 This shows the various designs each of the members of the group produced to begin the selection process. 
+                 In Korean, we all added specific elements on how to capture the consumers sight when consuming the product
+                 to ensure proper disposal.
+            </p>
+            <p style="color: #333; font-size: 1rem; margin-bottom: 10px; line-height: 1.5;">
+                Translations Include: "Recycling, A Piece of Bread", "Please throw away oil stained garbage",
+                 "Q&A : Where should the packaging be properly disposed?"
+            </p>
+
+            <p style="color: #888; font-size: 0.9rem; font-style: italic; margin-bottom: 20px;">
+                Scroll right to view the details →
+            </p>
+
+            <div class="horizontal-scroll-wrapper">
+                <img src="assets/sungsimdang/prototypes.jpg" alt="Design Evolution Timeline">
+            </div>
+        </section>
+
+        <section class="grid-gallery-section">
+            <h3>Phase 3: The Final Winning Product</h3>
+            
+            <div style="width: 100%; margin-bottom: 15px;">
+                <img 
+                    src="assets/sungsimdang/final_design.PNG" 
+                    alt="Final Design Render" 
+                    style="width: 100%; height: auto; display: block;">
+            </div>
+            
+            <p style="color: #666; font-size: 0.95rem; margin-bottom: 60px; border-left: 3px solid #F2C94C; padding-left: 15px;">
+                <strong>Approved Design:</strong> The finalized graphic layout ready for production. (With English Translation.)
+            </p>
+
+            <div style="display: flex; gap: 20px; width: 100%;">
+                
+                <div style="flex: 1; width: 50%;">
+                    <img 
+                        src="assets/sungsimdang/final_product.JPG" 
+                        alt="Mass Printing Process 1" 
+                        style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+
+                <div style="flex: 1; width: 50%;">
+                    <img 
+                        src="assets/sungsimdang/final_product2.jpg" 
+                        alt="Mass Printing Process 2" 
+                        style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+
+            </div>
+
+            <p style="color: #666; font-size: 0.95rem; margin-top: 20px; border-left: 3px solid #F2C94C; padding-left: 15px;">
+                <strong>Mass Production:</strong> Mass Printing of the product being distributed with an added bread graphic.
+            </p>
+        </section>
+
+        <section class="grid-gallery-section">
+            <h3>Final Presentation</h3>
+            <p style="color: #4A3B32; margin-bottom: 20px;">
+                After my time abroad I returned to New York University, where I was updated
+                by the members of the group of the success of the project.
+                They presented in a board meeting of our final design in my absense.
+            </p>
+            
+            <div style="display: flex; gap: 20px; width: 100%;">
+                
+                <div style="flex: 1; width: 50%;">
+                    <img 
+                        src="assets/sungsimdang/presentation.JPG" 
+                        alt="Presentation Photo 1" 
+                        style="width: 100%; height: auto; display: block;">
+                </div>
+
+                <div style="flex: 1; width: 50%;">
+                    <img 
+                        src="assets/sungsimdang/final_product3.JPG" 
+                        alt="Presentation Photo 2" 
+                        style="width: 100%; height: auto; display: block;">
+                </div>
+
+            </div>
+        </section>
+
+        <div style="height: 100px;"></div> 
+    </main>
+
+</body>
+</html>

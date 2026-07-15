@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyona Joseph | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+       
+        .p4-main-block {
+            grid-column: 1 / span 8; 
+            grid-row: 1 / span 2; 
+            position: relative;
+            background: #111;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .p4-side-hero {
+            grid-column: 9 / span 4;
+            grid-row: 1 / span 2; 
+            background: #222;
+            margin-bottom: 30px;
+        }
+
+        
+        .p4-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+        }
+
+        .p4-main-block:hover .p4-overlay { opacity: 1; }
+
+        .p4-overlay h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin: 0;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>Kyona Joseph</h1>
+            <p>Motion Designer I Video Editor I Product Designer</p>
+        </div>
+        <nav>
+            <a href="index.html" class="active">Work</a> / 
+            <a href="about.html">About</a> / 
+            <a href="mailto:Kyonajoseph101@gmail.com">Contact</a>
+        </nav>
+    </header>
+
+    <main class="portfolio-grid">
+
+     <a href="project4.html" class="p4-main-block">
+    <video src="assets/capstone/ending_scene.mp4" autoplay loop muted playsinline class="bg-video"></video>
+    <div class="p4-overlay">
+        <h2>The Silent Build-Up</h2>
+        <p>Capstone Project (2026)</p>
+    </div>
+</a>
+
+<a href="project4.html" class="grid-item p4-side-hero">
+    <video src="assets/capstone/ship_scene.mp4" autoplay loop muted playsinline class="bg-video"></video>
+</a>
+        <a href="project1.html" class="grid-item p1-main" style="grid-row: 3 / span 2;">
+            <video src="assets/intro_logo.mp4" autoplay loop muted playsinline class="bg-video"></video>
+            <div class="overlay">
+                <h2>Mixed Media Music Video</h2>
+                <p>Lloyd - "You" (2025)</p>
+            </div>
+        </a>
+        <a href="project1.html" class="grid-item p1-gif-top" style="grid-row: 3;"><video src="assets/dance_greenscreen.mp4" autoplay loop muted playsinline></video></a>
+        <a href="project1.html" class="grid-item p1-gif-bottom" style="grid-row: 4;"><video src="assets/hahaha_lips.mp4" autoplay loop muted playsinline></video></a>
+
+        <a href="project2.html" class="grid-item p2-gif-top" style="grid-row: 5;"><video src="assets/shadows/eyes.mp4" autoplay loop muted playsinline></video></a>
+        <a href="project2.html" class="grid-item p2-gif-bottom" style="grid-row: 6;"><video src="assets/shadows/sun.mp4" autoplay loop muted playsinline></video></a>
+        <a href="project2.html" class="grid-item p2-main" style="grid-row: 5 / span 2;">
+            <video src="assets/shadows/main_animation.mp4" autoplay loop muted playsinline class="bg-video"></video>
+            <div class="overlay">
+                <h2>Kinetic Typography</h2>
+                <p>Alina Kay Cover (2025)</p>
+            </div>
+        </a>
+
+        <div class="sungsimdang-wrapper">
+            <a href="project3.html" class="grid-item p3-main big-feature">
+                <img src="assets/sungsimdang/final_product3.JPG">
+                <div class="overlay">
+                    <h2>SungSimDang Sustainability Package Redesign</h2>
+                    <p>Product & Packaging (KAIST)</p>
+                </div>
+            </a>
+            <a href="project3.html" class="grid-item p3-sub"><img src="assets/sungsimdang/user_journey_testing.jpg"></a>
+            <a href="project3.html" class="grid-item p3-sub"><img src="assets/sungsimdang/final_product.JPG"></a>
+            <a href="project3.html" class="grid-item p3-sub"><img src="assets/sungsimdang/presentation.JPG"></a>
+        </div>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Silent Build-Up | Kyona Joseph</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body.capstone-theme { background-color:#0A0A0A; color:#E8E4DC; font-family:'Lato',sans-serif; }
+        .capstone-theme .top-nav .logo,
+        .capstone-theme .top-nav .nav-links a { color:#E8E4DC; }
+        .capstone-theme .top-nav .nav-links a:hover { color:#C9A84C; }
+
+        
+        .sidebar-toggle {
+            position:fixed; left:0; top:50%; transform:translateY(-50%);
+            z-index:200; background:#0A0A0A; border:1px solid #2a2210; border-left:none;
+            padding:14px 10px; cursor:pointer; display:flex; flex-direction:column;
+            align-items:center; gap:6px; transition:background .2s;
+        }
+        .sidebar-toggle:hover { background:#111; }
+        .sidebar-toggle-label {
+            font-size:.55rem; text-transform:uppercase; letter-spacing:3px; color:#C9A84C;
+            writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
+        }
+        .sidebar-toggle-icon { display:flex; flex-direction:column; gap:3px; }
+        .sidebar-toggle-icon span { display:block; width:14px; height:1px; background:#C9A84C; transition:.3s; }
+
+        .sidebar-panel {
+            position:fixed; left:0; top:0; height:100vh; width:240px;
+            background:#0d0d0d; border-right:1px solid #1e1e1e; z-index:199;
+            transform:translateX(-100%); transition:transform .35s cubic-bezier(.4,0,.2,1);
+            overflow-y:auto; padding:80px 0 40px 0; display:flex; flex-direction:column;
+        }
+        .sidebar-panel.open { transform:translateX(0); }
+        .sidebar-panel::-webkit-scrollbar { width:4px; }
+        .sidebar-panel::-webkit-scrollbar-track { background:#0d0d0d; }
+        .sidebar-panel::-webkit-scrollbar-thumb { background:#222; border-radius:2px; }
+        .sidebar-header { padding:0 24px 24px 24px; border-bottom:1px solid #1a1a1a; margin-bottom:16px; }
+        .sidebar-header p { font-size:.6rem; text-transform:uppercase; letter-spacing:3px; color:#555; margin:0 0 4px 0; }
+        .sidebar-header h3 { font-family:'Playfair Display',serif; font-size:1rem; color:#E8E4DC; margin:0; font-weight:700; }
+        .sidebar-act { padding:10px 24px 6px 24px; font-size:.58rem; text-transform:uppercase; letter-spacing:3px; color:#C9A84C; margin-top:8px; }
+        .sidebar-link {
+            display:block; padding:9px 24px; font-size:.78rem; color:#666; text-decoration:none;
+            text-transform:uppercase; letter-spacing:1px;
+            transition:color .2s,background .2s,padding-left .2s; border-left:2px solid transparent;
+        }
+        .sidebar-link:hover { color:#E8E4DC; background:rgba(201,168,76,.05); padding-left:28px; }
+        .sidebar-link.active { color:#C9A84C; border-left-color:#C9A84C; background:rgba(201,168,76,.06); padding-left:28px; }
+        .sidebar-num { color:#C9A84C; }
+        .sidebar-close { position:absolute; top:20px; right:16px; background:none; border:none; color:#555; font-size:1.2rem; cursor:pointer; padding:4px 8px; transition:color .2s; }
+        .sidebar-close:hover { color:#E8E4DC; }
+        .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:198; }
+        .sidebar-overlay.open { display:block; }
+        @media (max-width:768px) { .sidebar-toggle { display:none; } .sidebar-panel { width:200px; } }
+
+        
+        .intro-arrow-wrap {
+            position:fixed; left:36px; top:50%; z-index:201; pointer-events:none;
+            transform:translateY(-130px);
+            opacity:0;
+            transition:opacity .4s ease;
+        }
+        .intro-arrow-wrap.intro-visible { opacity:1; }
+        .intro-arrow-label {
+            font-family:'Playfair Display',serif; font-style:italic; font-weight:400;
+            font-size:.9rem; color:#E8C458; white-space:nowrap;
+            margin:0 0 2px 6px; text-align:right;
+            text-shadow:0 0 12px rgba(0,0,0,.6);
+            opacity:0;
+            transition:opacity .35s ease;
+        }
+        .intro-arrow-wrap.intro-label-visible .intro-arrow-label { opacity:1; }
+        @media (max-width:768px) { .intro-arrow-wrap { display:none; } }
+
+        /* HERO */
+        .capstone-hero { position:relative; width:100%; min-height:92vh; display:flex; align-items:flex-end; overflow:hidden; }
+        .capstone-hero-bg { position:absolute; inset:0; background:linear-gradient(135deg,#0A0A0A 0%,#1a1008 40%,#0f0a04 100%); }
+        .capstone-hero-bg::before { content:''; position:absolute; inset:0; opacity:.4; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"); }
+        .capstone-hero-bg-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:clamp(4rem,11vw,10rem); font-weight:700; color:rgba(201,168,76,.07); letter-spacing:-2px; line-height:.9; text-align:center; pointer-events:none; user-select:none; }
+        .capstone-hero video.hero-asset { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.55; }
+        .capstone-hero-content { position:relative; z-index:10; padding:0 60px 70px 60px; max-width:1600px; width:100%; margin:0 auto; }
+        .capstone-eyebrow { display:inline-block; font-size:.72rem; text-transform:uppercase; letter-spacing:4px; color:#C9A84C; border:1px solid #C9A84C; padding:5px 14px; margin-bottom:24px; }
+        .capstone-hero-title { font-family:'Playfair Display',serif; font-size:clamp(3rem,8vw,7.5rem); font-weight:700; margin:0 0 10px 0; line-height:.95; color:#E8E4DC; letter-spacing:-1px; }
+        .capstone-hero-sub { font-size:1rem; text-transform:uppercase; letter-spacing:4px; color:#888; margin:20px 0 0 0; }
+
+        
+        .capstone-theme .specs-left,.capstone-theme .specs-right { border-top:2px solid #C9A84C; }
+        .capstone-theme .spec-item h4 { color:#C9A84C; }
+        .capstone-theme .spec-item p  { color:#aaa; }
+        .capstone-theme .specs-right p { color:#ccc; }
+        .capstone-theme .specs-list-title { color:#C9A84C; }
+        .capstone-theme .specs-right li { border-left-color:#2a2210; color:#aaa; }
+
+        
+        .act-banner { max-width:1600px; margin:0 auto 70px auto; padding:0 50px; display:flex; align-items:center; gap:30px; }
+        .act-banner-label { font-family:'Playfair Display',serif; font-size:clamp(2.2rem,4vw,3.5rem); font-weight:700; color:#E8E4DC; white-space:nowrap; line-height:1; }
+        .act-banner-label span { display:block; font-family:'Lato',sans-serif; font-size:.72rem; text-transform:uppercase; letter-spacing:4px; color:#C9A84C; margin-bottom:8px; }
+        .act-banner-line { flex:1; height:1px; background:linear-gradient(to right,#C9A84C33,transparent); }
+
+        
+        .cap-section { max-width:1600px; margin:0 auto; padding:0 50px 110px 50px; }
+        .cap-hr     { border:none; border-top:1px solid #181818; max-width:1500px; margin:0 auto 80px auto; }
+        .cap-act-hr { border:none; border-top:1px solid #2a2210; max-width:1500px; margin:0 auto 80px auto; }
+        .cap-heading { max-width:1600px; margin:0 auto 50px auto; padding:0 50px; }
+        .cap-heading h2 { font-family:'Playfair Display',serif; font-size:2rem; color:#E8E4DC; margin:0 0 6px 0; }
+        .cap-heading p  { color:#555; font-size:.78rem; text-transform:uppercase; letter-spacing:2px; }
+
+       
+        .scene-head { display:flex; align-items:center; gap:24px; margin-bottom:50px; }
+        .scene-num { font-family:'Playfair Display',serif; font-size:4.5rem; font-weight:700; color:rgba(201,168,76,.15); line-height:1; min-width:70px; }
+        .scene-head-text h2 { font-family:'Playfair Display',serif; font-size:2rem; margin:0 0 5px 0; color:#E8E4DC; }
+        .scene-head-text p  { font-size:.75rem; text-transform:uppercase; letter-spacing:3px; color:#C9A84C; margin:0; }
+        .scene-head-line { flex:1; height:1px; background:linear-gradient(to right,#2a2210,transparent); }
+
+        
+        .cap-tags { display:flex; flex-wrap:wrap; gap:10px; margin:24px 0 40px 0; }
+        .cap-tag  { font-size:.7rem; text-transform:uppercase; letter-spacing:1.5px; padding:5px 14px; border:1px solid #2a2210; color:#C9A84C; background:rgba(201,168,76,.05); }
+
+        
+        .substance-badge { display:inline-block; font-size:.65rem; text-transform:uppercase; letter-spacing:2px; color:#E88C2C; border:1px solid #E88C2C; padding:3px 10px; margin-bottom:12px; margin-right:8px; }
+        .ae-badge        { display:inline-block; font-size:.65rem; text-transform:uppercase; letter-spacing:2px; color:#9999FF; border:1px solid #9999FF; padding:3px 10px; margin-bottom:12px; margin-right:8px; }
+        .ai-badge        { display:inline-block; font-size:.65rem; text-transform:uppercase; letter-spacing:2px; color:#FF8C00; border:1px solid #FF8C00; padding:3px 10px; margin-bottom:12px; margin-right:8px; }
+        .char-badge      { display:inline-block; font-size:.65rem; text-transform:uppercase; letter-spacing:2px; color:#7EC8E3; border:1px solid #7EC8E3; padding:3px 10px; margin-bottom:12px; margin-right:8px; }
+        .news-badge      { display:inline-block; font-size:.65rem; text-transform:uppercase; letter-spacing:2px; color:#aaa; border:1px solid #444; padding:3px 10px; margin-bottom:12px; margin-right:8px; }
+
+        
+        .cap-desc { font-size:1.05rem; line-height:1.75; color:#bbb; max-width:900px; margin-bottom:36px; }
+
+        
+        .cap-media-full { width:100%; aspect-ratio:16/9; background:#0f0f0f; border:1px solid #1a1a1a; overflow:hidden; margin-bottom:16px; position:relative; }
+        .cap-media-full img,.cap-media-full video { width:100%; height:100%; object-fit:cover; display:block; }
+        .cap-media-full.auto-height { aspect-ratio:unset; height:auto; }
+        .cap-media-full.auto-height img,.cap-media-full.auto-height video { height:auto; }
+
+        .cap-grid    { display:grid; gap:16px; margin-bottom:16px; }
+        .cap-grid.c2 { grid-template-columns:1fr 1fr; }
+        .cap-grid.c3 { grid-template-columns:1fr 1fr 1fr; }
+        .cap-grid.c4 { grid-template-columns:1fr 1fr 1fr 1fr; }
+        .cap-cell { aspect-ratio:4/3; background:#0f0f0f; border:1px solid #1a1a1a; overflow:hidden; position:relative; }
+        .cap-cell img,.cap-cell video { width:100%; height:100%; object-fit:cover; display:block; }
+        .cap-cell-label { font-size:.68rem; text-transform:uppercase; letter-spacing:2px; color:#555; margin-top:6px; text-align:center; }
+
+        
+        .substance-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:30px; }
+        .substance-grid-item img { width:100%; height:auto; display:block; background:#0f0f0f; }
+        .substance-grid-caption { font-size:.68rem; text-transform:uppercase; letter-spacing:2px; color:#555; margin-top:8px; text-align:center; }
+
+        
+        .paintings-scroll { display:flex; overflow-x:auto; gap:20px; padding-bottom:20px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+        .paintings-scroll::-webkit-scrollbar { height:6px; }
+        .paintings-scroll::-webkit-scrollbar-track { background:#111; }
+        .paintings-scroll::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
+        .painting-card { flex:0 0 auto; width:220px; scroll-snap-align:start; }
+        .painting-card img { width:100%; height:200px; object-fit:contain; display:block; background:#111; border:1px solid #1a1a1a; }
+        .painting-card p { font-size:.65rem; color:#888; text-transform:uppercase; line-height:1.4; margin-top:8px; padding:0 2px; }
+        .painting-card p span { color:#C9A84C; display:block; }
+
+        
+        .cap-hscroll { width:100%; overflow-x:auto; white-space:nowrap; padding-bottom:16px; margin-bottom:30px; cursor:grab; -webkit-overflow-scrolling:touch; }
+        .cap-hscroll img { height:380px; width:auto; max-width:none; display:inline-block; margin-right:14px; object-fit:cover; }
+        .cap-hscroll::-webkit-scrollbar { height:6px; }
+        .cap-hscroll::-webkit-scrollbar-track { background:#111; }
+        .cap-hscroll::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
+
+        .fab-scroll { display:flex; gap:15px; overflow-x:auto; padding-bottom:20px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+        .fab-scroll::-webkit-scrollbar { height:6px; }
+        .fab-scroll::-webkit-scrollbar-track { background:#111; }
+        .fab-scroll::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
+        .fab-card { flex:0 0 auto; scroll-snap-align:start; height:260px; width:auto; background:#0f0f0f; border:1px solid #1a1a1a; overflow:hidden; }
+        .fab-card img { height:100%; width:auto; display:block; object-fit:cover; }
+
+        .mocap-scroll { display:flex; gap:20px; overflow-x:auto; padding-bottom:20px; -webkit-overflow-scrolling:touch; }
+        .mocap-scroll::-webkit-scrollbar { height:6px; }
+        .mocap-scroll::-webkit-scrollbar-track { background:#111; }
+        .mocap-scroll::-webkit-scrollbar-thumb { background:#333; border-radius:3px; }
+        .mocap-card { flex:0 0 80%; }
+        .mocap-card video { width:100%; height:auto; display:block; }
+
+        
+        .scroll-hint { font-size:.75rem; text-transform:uppercase; letter-spacing:2px; color:#555; margin-bottom:12px; }
+        .ref-label   { font-size:.75rem; text-transform:uppercase; letter-spacing:2px; color:#C9A84C; margin-bottom:16px; margin-top:40px; }
+        .sub-label   { font-size:.75rem; text-transform:uppercase; letter-spacing:2px; color:#555; margin-bottom:10px; margin-top:30px; }
+
+        
+        .chapter-box {
+            border:1px solid #2a2210;
+            background:rgba(201,168,76,.03);
+            padding:30px 36px;
+            margin-bottom:50px;
+            max-width:900px;
+        }
+        .chapter-box-label {
+            font-size:.65rem;
+            text-transform:uppercase;
+            letter-spacing:3px;
+            color:#C9A84C;
+            margin-bottom:12px;
+            display:block;
+        }
+        .chapter-box h3 {
+            font-family:'Playfair Display',serif;
+            font-size:1.6rem;
+            color:#E8E4DC;
+            margin:0 0 14px 0;
+        }
+        .chapter-box p {
+            font-size:1rem;
+            line-height:1.75;
+            color:#bbb;
+            margin:0;
+        }
+
+        @media (max-width:900px) {
+            .cap-section { padding:0 20px 80px 20px; }
+            .cap-grid.c2,.cap-grid.c3,.cap-grid.c4 { grid-template-columns:1fr; }
+            .substance-grid { grid-template-columns:1fr; }
+            .capstone-hero-content { padding:0 20px 50px 20px; }
+            .cap-heading,.act-banner { padding:0 20px; }
+        }
+    </style>
+</head>
+<body class="capstone-theme">
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="intro-arrow-wrap" id="introArrow">
+        <p class="intro-arrow-label">sections</p>
+        <svg width="160" height="120" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path id="arrowCurve"
+                  d="M 150 25 C 115 5 115 55 90 50 C 65 45 65 10 40 25 C 18 38 30 75 14 110"
+                  stroke="#E8C458" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path id="arrowHeadLeft" d="M 14 110 L 26 100" stroke="#E8C458" stroke-width="3" stroke-linecap="round" fill="none"/>
+            <path id="arrowHeadDown" d="M 14 110 L 14 94" stroke="#E8C458" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+    </div>
+
+    <nav class="sidebar-panel" id="sidebarPanel">
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
+        <div class="sidebar-header">
+            <p>Sections</p>
+            <h3>The Silent Build&#8209;Up</h3>
+        </div>
+        <a href="#overview" class="sidebar-link">Overview</a>
+        <div class="sidebar-act"> Scenes</div>
+        <a href="#scene-plantation" class="sidebar-link"><span class="sidebar-num">01</span> &nbsp; Plantation</a>
+        <a href="#scene-lashes" class="sidebar-link"><span class="sidebar-num">02</span> &nbsp; Lashes &mdash; Back Scars</a>
+        <a href="#scene-boat" class="sidebar-link"><span class="sidebar-num">03</span> &nbsp; Transatlantic Slave Trade</a>
+        <a href="#scene-shackled" class="sidebar-link"><span class="sidebar-num">04</span> &nbsp; Shackled Feet</a>
+        <a href="#scene-sa" class="sidebar-link"><span class="sidebar-num">05</span> &nbsp; Sexual Assault</a>
+        <a href="#scene-assets" class="sidebar-link"><span class="sidebar-num">06</span> &nbsp; Projected &amp; Painted Assets</a>
+        <a href="#scene-jail" class="sidebar-link"><span class="sidebar-num">07</span> &nbsp; Mass Incarceration</a>
+        <a href="#scene-lr9" class="sidebar-link"><span class="sidebar-num">08</span> &nbsp; Little Rock Nine</a>
+        <a href="#scene-kkk" class="sidebar-link"><span class="sidebar-num">09</span> &nbsp; KKK Scene</a>
+        <a href="#scene-trayvon" class="sidebar-link"><span class="sidebar-num">10</span> &nbsp; Trayvon Martin</a>
+        <a href="#scene-redlining" class="sidebar-link"><span class="sidebar-num">11</span> &nbsp; Redlining</a>
+        <a href="#scene-mlk" class="sidebar-link"><span class="sidebar-num">12</span> &nbsp; MLK &amp; Civil Rights</a>
+        <a href="#scene-final" class="sidebar-link"><span class="sidebar-num">13</span> &nbsp; The Final Scene</a>
+        <div class="sidebar-act"> Pipeline &mdash; Process &amp; Assets</div>
+        <a href="#mocap" class="sidebar-link">Motion Capture &amp; MotionBuilder Cleanup</a>
+        <a href="#metahuman" class="sidebar-link">MetaHuman &amp; Facial Motion Capture</a>
+        <a href="#fab" class="sidebar-link">FAB &amp; Sketchfab Assets</a>
+    </nav>
+
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sections">
+        <div class="sidebar-toggle-icon">
+            <span></span><span></span><span></span>
+        </div>
+        <span class="sidebar-toggle-label">Sections</span>
+    </button>
+
+    <nav class="top-nav">
+        <a href="index.html" class="logo">Kyona Joseph</a>
+        <div class="nav-links">
+            <a href="index.html">Work</a> / <a href="about.html">About</a>
+        </div>
+    </nav>
+
+    <main>
+
+        
+        <header class="capstone-hero" id="hero">
+            <div class="capstone-hero-bg">
+                <div class="capstone-hero-bg-text">THE<br>SILENT<br>BUILD&#8209;UP</div>
+            </div>
+            <video src="assets/capstone/The_Silent_Buildup_10secs.mp4" autoplay loop muted playsinline class="hero-asset"></video>
+            <div class="capstone-hero-content">
+                <div class="capstone-eyebrow">Senior Capstone &mdash; 2026</div>
+                <h1 class="capstone-hero-title">The Silent<br>Build&#8209;Up</h1>
+                <p class="capstone-hero-sub">Black History &nbsp;&middot;&nbsp; Unreal Engine 5 &nbsp;&middot;&nbsp; Motion Capture &nbsp;&middot;&nbsp; VFX</p>
+            </div>
+        </header>
+
+        
+        <section id="overview" class="project-specs">
+            <div class="specs-left">
+                <div class="spec-item"><h4>— PROJECT</h4><p>The Silent Build-Up<br>Senior Capstone</p></div>
+                <div class="spec-item"><h4>— ROLE</h4><p>Director<br>3D Animator<br>Motion Designer<br>VFX Artist</p></div>
+                <div class="spec-item"><h4>— INSTITUTION</h4><p>New York University<br>Integrated Design &amp; Media</p></div>
+                <div class="spec-item"><h4>— DATE</h4><p>May 2026</p></div>
+            </div>
+            <div class="specs-right">
+                <p><em>The Silent Build-Up</em> is a senior capstone project exploring Black history through immersive cinematic storytelling. My main goal is to convey the passage of time and how history is repackaged in the context of African Americans; illustrating how Black history is not just a series of past events, but a lived experience that constantly overlaps with the present, stretching from the Transatlantic Slave Trade to the Civil Rights Movement and the current time period under the Trump Administration.</p>
+                <p>There might be some confusion around the use of the audio narration due to Rudyard Kipling's racist beliefs. The author was referencing the toil of British soldiers invading South Africa. I believe the audio is quite hypocritical in that sense who manufactured this war, and why should sympathy lie with the colonizer sending men to enforce colonialism? I aimed to take the audio, which many people have not dug into deeply, and twist it so that Rudyard Kipling's narration becomes the antagonist in the context of African Americans, along with symbolism represented through numbers used within the audio. This is a never-ending war that has silently built up, and yet again we are forced to fight.</p>
+                <p>Built in Unreal Engine 5, the project combines motion capture performance, MetaHuman characters, Adobe Substance Painter texturing, and environments to recreate history.</p>
+                <p>Each scene was built as a self-contained world, from found footage and archival art references to fully rigged 3D characters.</p>
+                <div class="specs-list-title">FULL PIPELINE</div>
+                <ul>
+                    <li>Motion Capture &rarr; MotionBuilder Cleanup &rarr; Unreal Engine 5</li>
+                    <li>MetaHuman Creator &rarr; Facial Motion Capture &rarr; After Effects</li>
+                    <li>Adobe Substance Painter &rarr; Unreal Control Rig</li>
+                    <li>Adobe Illustrator &rarr; Compositing &rarr; FAB Assets </li>
+                    
+            </div>
+        </section>
+
+
+        
+        <hr class="cap-act-hr" id="act1">
+        <div class="act-banner">
+            <div class="act-banner-label"><span>SCENE BUILDING</span> Enslavement</div>
+            <div class="act-banner-line"></div>
+        </div>
+
+        
+        <section class="cap-section" id="scene-plantation">
+            <div class="scene-head">
+                <span class="scene-num">01</span>
+                <div class="scene-head-text"><h2>Plantation</h2><p>Unreal Environment</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <img src="assets/capstone/plantation-7.jpg" alt="Plantation Scene">
+            </div>
+            <p class="cap-desc">In the opening plantation scene, I wanted a subtle way to represent the number 7. I decided to do this through the silhouette of a woman crouching, positioning her body so it actually forms the shape of the number. To bring the scene together, I arranged the environment and the cotton fields to frame the shot. I then rigged the 3D character in Mixamo to create the skeleton and refined the motion capture animations in MotionBuilder to get the movement.
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">Character Rigging</span>
+                
+            </div>
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-lashes">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">02</span>
+                <div class="scene-head-text"><h2>Lashes — Back Scars</h2><p>Unreal Environment &mdash; Autodesk Character Generator &mdash; Substance Painter</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <img src="assets/capstone/scars_scene.png" alt="Back Scars Scene">
+            </div>
+            <p class="cap-desc">This character was created in Autodesk Character Generator and then repainted in Adobe Substance Painter to achieve a realistic depiction of scarring across the back . I believe it was important to have aspects of realism in the film to force the viewer to confront the realities of the torturous methods used towards enslaved Africans. In Rudyard Kipling narration I wanted to have the scars represent the number 11 to add another layer of symbolism to the scene.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">Character Design</span>
+                
+            </div>
+
+            <div class="sub-label">Texture maps used to build this character</div>
+            <div style="margin-bottom:16px;">
+                <span class="char-badge">Autodesk Character Generator</span>
+                <span class="substance-badge">Adobe Substance Painter</span>
+                
+            </div>
+            <div class="substance-grid">
+                <div class="substance-grid-item">
+                    <img src="assets/capstone/character_generator_full.png" alt="Character Generator base">
+                    <p class="substance-grid-caption">Autodesk Character Generator — Base Model</p>
+                </div>
+                <div class="substance-grid-item">
+                    <img src="assets/capstone/scars_material.png" alt="Scars material">
+                    <p class="substance-grid-caption">Substance Painter — Scar Material</p>
+                </div>
+                <div class="substance-grid-item">
+                    <img src="assets/capstone/scars_basecolor.png" alt="Scars base color">
+                    <p class="substance-grid-caption">Substance Painter — Base Color Map</p>
+                </div>
+                <div class="substance-grid-item">
+                    <img src="assets/capstone/scars_normal.png" alt="Scars normal map">
+                    <p class="substance-grid-caption">Substance Painter — Normal Map</p>
+                </div>
+            </div>
+            <p class="cap-desc" style="margin-top:10px;">The maps above were used to build the character's skin surface inside Adobe Substance Painter. The base model from Autodesk Character Generator provided the skeletal mesh and UV layout. The scar material was painted with the color map controlling the skin tone and colors of the wound across the body, with the normal map creating the texture and surface detail.</p>
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-boat">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">03</span>
+                <div class="scene-head-text"><h2>Transatlantic Slave Trade</h2><p>Unreal Environment &mdash; VFX &mdash; Substance Painter</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <video src="assets/capstone/ship_scene.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:24px;">Sequencer Render &mdash; Unreal Engine 5</p>
+            <div class="cap-media-full">
+                <video src="assets/capstone/pre_ship_scene.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:30px;">Asset Pipeline &mdash; Pre-Render Viewport</p>
+            <p class="cap-desc">For the ship scene, the narration repeats, “Don’t, Don’t, Don’t , Don’t , Look at what’s in front of you . I aimed to show the barbaric conditions enacted on the millions of enslaved Africans transported to the Americas. The environment was built around a ship interior sourced through FAB. With motion capture, I acted out the movements and cleaned up the rigs in Motion Builder. An animated book prop was re-textured in Adobe Substance Painter to represent the Bible, showing the role religion played in forcing submission and brainwashing people as these atrocities occurred.
+                                    The low ambient lighting and slow camera movement were designed to create a suffocating atmosphere that puts the viewer in that position. It’s important to remember that 400 years ago is not as long as you think; these were the experiences of many, and it’s important to visualize them. Within the scene, a man is badly beaten, a woman is thrown overboard, and a woman has her baby stripped from her arms with the assumption the child is being thrown overboard. As a man stares at the camera begging for help, the viewer is told by this white identity to ignore all of that and just look at the Bible.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">Camera Movement</span>
+                
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-shackled">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">04</span>
+                <div class="scene-head-text"><h2>Shackled Feet</h2><p>Unreal Cinematic &mdash; Video &mdash; Texture Detail</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <video src="assets/capstone/ship_shackled_feet.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:24px;">Cinematic Video</p>
+            <div class="cap-media-full">
+                <video src="assets/capstone/pre_shackled_feet.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:30px;">Texture Pipeline &mdash; Substance Detail</p>
+            <p class="cap-desc">For this scene, the visual is used to represent the "20 and odd" first enslaved Africans to arrive in Virginia. I gathered 20 models with motion capture animation and obtained a scan of bilboes, which I then attached to the models to recreate how inhumane and tight the transportation was.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span>
+            </div>
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-sa">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">05</span>
+                <div class="scene-head-text"><h2>Sexual Assault</h2><p>Scene building &mdash; Facial Motion Capture</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-grid c2" style="margin-bottom:16px;">
+                <div class="cap-cell"><img src="assets/capstone/SA_scene_1.png" alt="SA scene 1"></div>
+                <div class="cap-cell"><img src="assets/capstone/SA_scene_3.png" alt="SA scene 2"></div>
+            </div>
+            <div class="cap-grid c2" style="margin-bottom:30px;">
+                <div class="cap-cell"><img src="assets/capstone/SA_scene_4.png" alt="SA scene 3"></div>
+                <div class="cap-cell"><img src="assets/capstone/SA_scene_2.png" alt="SA scene 4"></div>
+            </div>
+            <p class="cap-desc">I felt it was very important to include this scene. Sexual assault was prevalent during slavery, regardless of age or gender. With the audio repeating, “Men go mad with watching them,” I aimed to put the viewer in a first-person perspective as a white, distorted figure moves through the passage of time, showing the twisted nature of these acts. I specifically controlled the lighting to create a hazy, unsettling atmosphere for the viewer. I included facial motion capture to also intensify the scene. I edited premade blueprints to achieve the warped look of the white figure.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">OptiLink</span>
+                <span class="cap-tag">Metahumans</span><span class="cap-tag">Lighting</span>
+            </div>
+           
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-assets">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">06</span>
+                <div class="scene-head-text"><h2>Projected &amp; Painted Assets</h2><p>Unreal Environment &mdash; Substance Painter</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <img src="assets/capstone/bible_substance_painter.png" alt="Bible asset Substance Painter">
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:24px;">Bible Asset — Substance Painter Base</p>
+            <p class="cap-desc">Several key props throughout the film were textured using Adobe Substance Painter's such as the Bible and boot assets. For the Bible a genuine bible image was projected onto an existing book animation to fit the scene.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Adobe Substance Painter</span><span class="cap-tag">Texturing</span>
+                <span class="cap-tag">Props</span>
+            </div>
+            <span class="substance-badge">Adobe Substance Painter — Boot Texture</span>
+            <div class="cap-media-full">
+                <img src="assets/capstone/boots_substance_painter.png" alt="Boots substance texture">
+            </div>
+            <p class="cap-desc" style="margin-top:16px;">The boot was repainted from a Mixamo model and brought into Substance Painter to recreate early 1600s boots worn by colonizers. The surface uses a combination of a dirt/grime smart material applied to the crevices and sole seams, and a hand-painted scuff layer across the toe cap and heel where wear would naturally accumulate. The stitching detail was achieved using a stitching material in Substance Painter.</p>
+            <p class="cap-cell-label">Boots Asset — Substance Painter</p>
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-jail">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">07</span>
+                <div class="scene-head-text"><h2>Mass Incarceration</h2><p>Unreal Environment</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <img src="assets/capstone/jail_scene.png" alt="Jail scene">
+            </div>
+            <p class="cap-desc">This scene was used to represent mass incarceration, with African Americans being incarcerated at 5 times the rate of white people. The bars were used to represent the number 11 in the narration by matching the shape of the number.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">Environment</span>
+            </div>
+        </section>
+
+
+       
+        
+        <section class="cap-section" id="scene-lr9">
+            <div class="scene-head">
+                <span class="scene-num">08</span>
+                <div class="scene-head-text"><h2>Little Rock Nine</h2><p>Unreal Environment &mdash; Substance Painter &times;2 &mdash; Newspaper &mdash; 9 Art References</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <p class="cap-desc">For this section, I decided to reference art through the clothing of the Little Rock Nine, who were the first African American students to attend desegregated classes at Little Rock Central High School. You can see mobs of white silhouettes gathering around the children reflecting history.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">Little Rock Nine</span>
+                <span class="cap-tag">Civil Rights</span><span class="cap-tag">Art Reference</span>
+            </div>
+            <p class="scroll-hint">Scene Video — LR9 Alabama Bombing</p>
+            <div class="cap-media-full" style="margin-bottom:30px;">
+                <video id="lr9-video" src="assets/capstone/lr9_alabama_bombing.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <div style="margin-bottom:16px;">
+                <span class="substance-badge">Substance Painter &times;2</span>
+            </div>
+            <div class="substance-grid" style="margin-bottom:40px;">
+                <div class="substance-grid-item">
+                    <img src="assets/capstone/little_rock_9.png" alt="LR9 Substance 1">
+                    <p class="substance-grid-caption">Substance Texture 01 — Female Student</p>
+                </div>
+                <div class="substance-grid-item">
+                    <img src="assets/capstone/lr9_male.png" alt="LR9 Substance 2">
+                    <p class="substance-grid-caption">Substance Texture 02 — Male Student</p>
+                </div>
+            </div>
+            <p class="ref-label">Original Art References &mdash; 9 Paintings &mdash; Scroll to view &rarr;</p>
+            <div class="paintings-scroll">
+                <div class="painting-card"><img src="assets/capstone/Charles Henry Alston Walking 1958.png" alt="Walking"><p>Alston<span>Walking, 1958</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/Blue Monday by Annie Lee.png" alt="Blue Monday"><p>Annie Lee<span>Blue Monday</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/Jones-Hogu, Barbara Unite.png" alt="Unite"><p>Jones-Hogu<span>Unite</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/Faith Ringgold American People Series20_ Die.png" alt="Die"><p>Faith Ringgold<span>Die</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/Norman Rockwell + The Problem We All Live With.png" alt="Rockwell"><p>Norman Rockwell<span>The Problem We All Live With</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/Trapped Created by Hollingsworth, Alvin Carl,.png" alt="Trapped"><p>Hollingsworth<span>Trapped</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/Wadsworth Jarrell, Liberation Soldiers, 1972.png" alt="Liberation"><p>Wadsworth Jarrell<span>Liberation Soldiers, 1972</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/Jacob Lawrence, Soldiers and Students, 1962.png" alt="Lawrence"><p>Jacob Lawrence<span>Soldiers &amp; Students, 1962</span></p></div>
+                <div class="painting-card"><img src="assets/capstone/newspaper_1.jpg" alt="Newspaper"><p>SF Chronicle<span>News Reference, 1957</span></p></div>
+            </div>
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-kkk">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">09</span>
+                <div class="scene-head-text"><h2>KKK Scene</h2><p>Unreal Environment &mdash; Cinematic Renders</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <p class="cap-desc">Lynching has been used as an act of brutality against African Americans and continues today through white supremacist groups such as the Ku Klux Klan.</p>
+            <div class="cap-media-full" style="margin-bottom:16px;">
+                <img src="assets/capstone/kkk_scene1.png" alt="KKK scene 1">
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:24px;">Cinematic Render 01</p>
+            <div class="cap-media-full">
+                <img src="assets/capstone/kkk_scene2.png" alt="KKK scene 2">
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:30px;">Cinematic Render 02</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span>
+                
+            </div>
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-trayvon">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">10</span>
+                <div class="scene-head-text"><h2>Trayvon Martin</h2><p>Unreal Environment &mdash; Illustrator 3D Text</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <video id="slow-video-trayvon" src="assets/capstone/trayvon_scene.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-desc">Within this scene, the number 17 is spoken in the audio. I decided to represent that number with a birthday cake and candles for Trayvon Martin, a 17-year-old who was fatally shot by George Zimmerman on February 26, 2012, in Sanford, Florida. Trayvon was walking to a convenience store to buy snacks when George Zimmerman called the police and reported him as a suspicious person. Against the instruction of the police, Zimmerman followed Trayvon and proceeded to shoot and kill him. The state charged him with second-degree murder, but he claimed self-defense under an unjust stand-your-ground law.</p>
+            <p class="cap-desc">A jury acquitted Trayvon's killer. His murder led to societal debates surrounding his wearing of a hoodie, unraveling the prejudices around Black people being perceived as "thugs" for wearing that clothing item. Within the scene, the hoodie is present as he bends over to blow out the candles.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span>
+                
+            </div>
+
+           
+            <span class="ai-badge">Adobe Illustrator &mdash; 3D Text Extrusion</span>
+            
+            <div class="cap-media-full">
+                <img src="assets/capstone/Trayvon.png" alt="Illustrator 3D text extrusion">
+            </div>
+           
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-redlining">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">11</span>
+                <div class="scene-head-text"><h2>Redlining</h2><p>Unreal Environment &mdash; Systemic Racism</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <video src="assets/capstone/redlining_scene.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:24px;">Cinematic Render 01</p>
+            <div class="cap-media-full">
+                <video src="assets/capstone/pre_redlining_scene.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:30px;">Cinematic Render 02 — Pre-Render Viewport</p>
+            <p class="cap-desc">Redlining is a historical, systemic practice where banks and federal agencies outlined minority-dense (typically African American) neighborhoods in red, denying them loans and mortgages. The Home Owners' Loan Corporation (HOLC) mapped cities, color-coding neighborhoods from green, the best, to red, dangerous. Red areas primarily contained minority residents and were deemed too risky for federally backed mortgages. Even if individuals qualified financially, their location disqualified them, forcing residents into exploitative "contract" buying with no equity. This prevented generations of Black and Brown families from buying homes, directly hindering their ability to build generational wealth, an effect still reflected in modern-day America.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">Redlining</span>
+                <span class="cap-tag">Systemic Racism</span>
+        </section>
+
+        
+        <hr class="cap-hr" id="scene-mlk">
+        <section class="cap-section">
+            <div class="scene-head">
+                <span class="scene-num">12</span>
+                <div class="scene-head-text"><h2>MLK &amp; Civil Rights</h2><p>Unreal Cinematic &mdash; Multi-Video Sequence</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full">
+                <video src="assets/capstone/assassination_scene_low_quality.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:10px;">MLK — Assassination Scene</p>
+            <p class="cap-desc" style="margin-top:16px;">This scene was recreated and repainted to represent the assassination of Martin Luther King Jr. during the Civil Rights era, and white supremacists gathering among each other, inciting violence towards Black activists.</p>
+            <div class="cap-media-full" style="margin-top:40px;">
+                <video src="assets/capstone/think_of_something_diff.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:10px;">Civil Rights</p>
+            <p class="cap-desc" style="margin-top:16px;">I recreated this scene by projecting archival footage onto the walls and applying blueprints to the KKK silhouettes, which I motion-captured and cleaned up. I then rotated the camera around the white silhouette to further emphasize the intensity of the scene and build toward the assassination.</p>
+            <div class="cap-media-full" style="margin-top:40px;">
+                <video src="assets/capstone/mlk_scene.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:10px;">MLK — March</p>
+            <p class="cap-desc" style="margin-top:16px;">With this scene, I repainted assets to match the location where Martin Luther King Jr. was assassinated. I matched the crowd's reaction to the shooting and included a flash-frame effect.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">MLK</span>
+            </div>
+        </section>
+
+
+       
+        
+        <section class="cap-section" id="scene-final">
+            <div class="scene-head">
+                <span class="scene-num">13</span>
+                <div class="scene-head-text"><h2>The Final Scene</h2><p>Unreal Cinematic &mdash; Video &mdash; Scene Setup &mdash; 3 Still Images</p></div>
+                <div class="scene-head-line"></div>
+            </div>
+            <div class="cap-media-full" style="margin-bottom:16px;">
+                <video src="assets/capstone/ending_scene.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:30px;">Final Sequence Render</p>
+            <p class="cap-desc">Within this scene, a row of text reads "SAY THEIR NAMES," emphasizing the endless victims of brutality within the United States and the urge to end the desensitization and lack of action. The white silhouette grows more and more agitated as the Black Lives Matter movement takes effect. The camera quickly shows the moment George Floyd was murdered, inciting the protests, before revealing the current problems Black Americans face under the Trump Administration — with policies being gutted or implemented, reflecting the endless setbacks and injustices aimed at minorities.</p>
+            <p class="sub-label" style="margin-top:10px;">Scene Setup — Pre-Render Viewport</p>
+            <div class="cap-media-full" style="margin-bottom:30px;">
+                <video src="assets/capstone/ending_scene_trump_blm.mp4" autoplay loop muted playsinline></video>
+            </div>
+            <p class="cap-desc">This is the overall setup of the scene, showing how the camera movement progresses to reveal the full video with a smooth transition.
+
+</p>
+
+            <div class="cap-media-full auto-height" style="margin-bottom:16px;">
+                <img src="assets/capstone/pre_ending_scene_1.png" alt="Final still 1">
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:24px;">Cinematic Still 01</p>
+            <div class="cap-media-full auto-height" style="margin-bottom:16px;">
+                <img src="assets/capstone/pre_ending_scene_2.png" alt="Final still 2">
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:24px;">Cinematic Still 02</p>
+            <div class="cap-media-full auto-height" style="margin-bottom:16px;">
+                <img src="assets/capstone/pre_ending_scene_3.png" alt="Final still 3">
+            </div>
+            <p class="cap-cell-label" style="margin-bottom:30px;">Cinematic Still 03</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">Final Scene</span>
+                
+        </section>
+
+
+        
+        <hr class="cap-act-hr" id="pipeline">
+        <div class="act-banner">
+            <div class="act-banner-label"><span>Pipeline</span>Process &amp; Assets</div>
+            <div class="act-banner-line"></div>
+        </div>
+
+
+
+        
+        <hr class="cap-hr">
+        <div class="cap-heading" id="mocap">
+            <h2>Motion Capture &amp; MotionBuilder Cleanup</h2>
+            <p>Performance Recording &mdash; Animation Pipeline</p>
+        </div>
+        <section class="cap-section" style="padding-top:0;">
+            <p class="cap-desc">Full-body motion capture was recorded on a performance stage and imported into MotionBuilder for cleanup — removing jitter, correcting foot sliding, and retargeting the animation data to the MetaHuman skeleton before being brought into Unreal Engine 5. The three clips below show the motion data at different stages of the cleanup process, from raw capture to refined animation ready for rendering.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">Motion Capture</span><span class="cap-tag">MotionBuilder</span>
+                <span class="cap-tag">Retargeting</span><span class="cap-tag">Animation Cleanup</span><span class="cap-tag">MetaHuman</span>
+            </div>
+            <p class="scroll-hint">Mocap Clips — Scroll to view all &rarr;</p>
+            <div class="mocap-scroll">
+                <div class="mocap-card">
+                    <video src="assets/capstone/motion_builder_2.mp4" autoplay loop muted playsinline></video>
+                    <p class="cap-cell-label" style="margin-top:10px;">Mocap Sequence 01</p>
+                </div>
+                <div class="mocap-card">
+                    <video src="assets/capstone/motion_builder_.mp4" autoplay loop muted playsinline></video>
+                    <p class="cap-cell-label" style="margin-top:10px;">Mocap Sequence 02</p>
+                </div>
+                <div class="mocap-card">
+                    <video src="assets/capstone/motion_builder_3.mp4" autoplay loop muted playsinline></video>
+                    <p class="cap-cell-label" style="margin-top:10px;">Mocap Sequence 03</p>
+                </div>
+            </div>
+        </section>
+
+        
+        <hr class="cap-hr" id="metahuman">
+<div class="cap-heading">
+    <h2>MetaHuman &amp; Facial Motion Capture</h2>
+    <p>Character Creation &mdash; Expression Pipeline</p>
+</div>
+<section class="cap-section" style="padding-top:0;">
+    <p class="cap-desc">Characters were built in Unreal's MetaHuman Creator for photorealistic features and a fully rigged body ready to receive motion capture data. Facial expressions were captured separately and mapped onto the MetaHuman's facial rig.</p>
+    <div class="cap-tags">
+        <span class="cap-tag">MetaHuman Creator</span><span class="cap-tag">Facial Motion Capture</span>
+        <span class="cap-tag">Character Design</span>
+    </div>
+    <div class="mocap-scroll">
+        <div class="mocap-card" style="flex-basis: 53%;">
+            <video src="assets/capstone/facial_mocap_withme.mp4" autoplay loop muted playsinline></video>
+            <p class="cap-cell-label" style="margin-top:10px;">Mocap Sequence 01</p>
+        </div>
+    </div>
+</section>
+
+        
+        <hr class="cap-hr" id="fab">
+        <div class="cap-heading">
+            <h2>FAB &amp; Sketchfab Assets</h2>
+            <p>Unreal Marketplace &mdash; Environment &amp; Prop Assets</p>
+        </div>
+        <section class="cap-section" style="padding-top:0; padding-bottom:60px;">
+            <p class="cap-desc">Assets sourced from FAB and Sketchfab were used across the environments throughout the film and some being edited.</p>
+            <div class="cap-tags">
+                <span class="cap-tag">FAB Assets</span><span class="cap-tag">Sketchfab</span>
+                <span class="cap-tag">Unreal Engine 5</span><span class="cap-tag">World Building</span><span class="cap-tag">Environment Props</span>
+            </div>
+            <p class="scroll-hint">Assets — Scroll to view all &rarr;</p>
+            <div class="fab-scroll">
+                <div class="fab-card"><img src="assets/capstone/fab_1.png" alt="FAB Asset 1"></div>
+                <div class="fab-card"><img src="assets/capstone/fab_2.png" alt="FAB Asset 2"></div>
+                <div class="fab-card"><img src="assets/capstone/fab_3.png" alt="FAB Asset 3"></div>
+                <div class="fab-card"><img src="assets/capstone/fab_4.png" alt="FAB Asset 4"></div>
+                <div class="fab-card"><img src="assets/capstone/fab_5.png" alt="FAB Asset 5"></div>
+                <div class="fab-card"><img src="assets/capstone/fab_6.png" alt="FAB Asset 6"></div>
+                <div class="fab-card"><img src="assets/capstone/fab_7.png" alt="FAB Asset 7"></div>
+            </div>
+        </section>
+
+        <div style="height:100px;"></div>
+    </main>
+
+    <script>
+        document.querySelectorAll('.cap-hscroll,.mocap-scroll,.fab-scroll,.paintings-scroll').forEach(el => {
+            let isDown=false,startX,scrollLeft;
+            el.addEventListener('mousedown',e=>{isDown=true;el.style.cursor='grabbing';startX=e.pageX-el.offsetLeft;scrollLeft=el.scrollLeft;});
+            el.addEventListener('mouseleave',()=>{isDown=false;el.style.cursor='grab';});
+            el.addEventListener('mouseup',()=>{isDown=false;el.style.cursor='grab';});
+            el.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();el.scrollLeft=scrollLeft-(e.pageX-el.offsetLeft-startX)*1.5;});
+        });
+
+        const lr9Video=document.getElementById('lr9-video');
+        if(lr9Video)lr9Video.playbackRate=0.4;
+        const trayvonVideo=document.getElementById('slow-video-trayvon');
+        if(trayvonVideo)trayvonVideo.playbackRate=0.5;
+
+        const panel=document.getElementById('sidebarPanel');
+        const overlay=document.getElementById('sidebarOverlay');
+        const toggle=document.getElementById('sidebarToggle');
+        const closeBtn=document.getElementById('sidebarClose');
+        const introArrow=document.getElementById('introArrow');
+        let introArrowDismissed=false;
+        (function setupIntroArrow(){
+            if(!introArrow) return;
+            const curve=document.getElementById('arrowCurve');
+            const barbLeft=document.getElementById('arrowHeadLeft');
+            const barbDown=document.getElementById('arrowHeadDown');
+            const curveLen=curve.getTotalLength();
+            const barbLeftLen=barbLeft.getTotalLength();
+            const barbDownLen=barbDown.getTotalLength();
+            [ [curve,curveLen], [barbLeft,barbLeftLen], [barbDown,barbDownLen] ].forEach(([el,len])=>{
+                el.style.strokeDasharray=len;
+                el.style.strokeDashoffset=len;
+            });
+
+            const DRAW_IN=1100, HOLD=5000, DRAW_OUT=900, BARB_DRAW=180;
+
+            function animateOffset(el,len,from,to,duration,delay){
+                return el.animate(
+                    [{strokeDashoffset:from},{strokeDashoffset:to}],
+                    {duration,delay,easing:'ease-in-out',fill:'forwards'}
+                );
+            }
+
+            setTimeout(()=>{
+                if(introArrowDismissed) return;
+                introArrow.classList.add('intro-visible');
+                animateOffset(curve,curveLen,curveLen,0,DRAW_IN,0);
+                animateOffset(barbLeft,barbLeftLen,barbLeftLen,0,BARB_DRAW,DRAW_IN-40);
+                animateOffset(barbDown,barbDownLen,barbDownLen,0,BARB_DRAW,DRAW_IN-40+BARB_DRAW*0.4);
+                setTimeout(()=>introArrow.classList.add('intro-label-visible'),DRAW_IN+120);
+
+                setTimeout(()=>{
+                    if(introArrowDismissed) return;
+                    playReverse();
+                },DRAW_IN+HOLD);
+            },1100);
+
+            function playReverse(){
+                introArrow.classList.remove('intro-label-visible');
+                animateOffset(barbDown,barbDownLen,0,barbDownLen,BARB_DRAW,0);
+                animateOffset(barbLeft,barbLeftLen,0,barbLeftLen,BARB_DRAW,BARB_DRAW*0.4);
+                animateOffset(curve,curveLen,0,curveLen,DRAW_OUT,BARB_DRAW+60);
+                setTimeout(()=>introArrow.classList.remove('intro-visible'),BARB_DRAW+60+DRAW_OUT);
+            }
+
+            introArrow.dismissEarly=function(){
+                if(introArrowDismissed) return;
+                introArrowDismissed=true;
+                playReverse();
+            };
+        })();
+        function hideIntroArrow(){ if(introArrow && introArrow.dismissEarly) introArrow.dismissEarly(); }
+        function openSidebar(){panel.classList.add('open');overlay.classList.add('open');toggle.style.opacity='0';toggle.style.pointerEvents='none';hideIntroArrow();}
+        function closeSidebar(){panel.classList.remove('open');overlay.classList.remove('open');toggle.style.opacity='1';toggle.style.pointerEvents='auto';}
+        toggle.addEventListener('click',openSidebar);
+        closeBtn.addEventListener('click',closeSidebar);
+        overlay.addEventListener('click',closeSidebar);
+        document.querySelectorAll('.sidebar-link').forEach(link=>link.addEventListener('click',()=>setTimeout(closeSidebar,150)));
+
+        const sideLinks=document.querySelectorAll('.sidebar-link');
+        const sectionIds=Array.from(sideLinks).map(a=>a.getAttribute('href').replace('#','')).filter(id=>document.getElementById(id));
+        function updateActive(){
+            let current=sectionIds[0];
+            sectionIds.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-220)current=id;});
+            sideLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+        }
+        window.addEventListener('scroll',updateActive,{passive:true});
+        updateActive();
+    </script>
+</body>
+</html>
